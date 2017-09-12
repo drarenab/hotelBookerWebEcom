@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  * Servlet implementation class Doadd
  */
@@ -17,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Doadd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	@EJB(lookup ="ejb:/HotelBookersEJB//Rooms!com.logic.RoomsRemote")
-    private RoomsRemote abc;
+//	@EJB(lookup ="ejb:/HotelBookersEJB//Rooms!com.logic.DbRemote")
+   // private DbRemote abc;
     
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,7 +31,7 @@ public class Doadd extends HttpServlet {
     
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String as=request.getParameter("a");
+/*		String as=request.getParameter("a");
 		int a=Integer.parseInt(as);
 		as=request.getParameter("b");
 		int b=Integer.parseInt(as);
@@ -41,10 +42,14 @@ public class Doadd extends HttpServlet {
 			result=abc.add(a, b);
 		}catch(Exception e){e.printStackTrace();}
  
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
 		out.println("<h3>Results for the addition</h3>");
-		out.println("Result:"+result);		
+		out.println("Result:"+result);		*/
+		
+	//	response.setContentType("text/html");
+	//	PrintWriter out = response.getWriter();
+		
+	//	out.println(abc.getAllRooms().toString());
+		
 	}
 
 	/**
