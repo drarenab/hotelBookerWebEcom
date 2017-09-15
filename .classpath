@@ -6,7 +6,7 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/AZ PC/eclipsejee/workspace/HotelBookersWeb/WebContent/WEB-INF/lib/HotelBookersEJB.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/WildFly 10.0 Runtime 2">
 		<attributes>
-			<attribute name="owner.project.facets" value="jst.web"/>
+			<attribute name="owner.project.facets" value="jst.jaxrs;jst.web"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_131">
@@ -14,5 +14,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/AZ PC/eclipsejee/workspace/HotelBookersWeb/WebContent/WEB-INF/lib/jackson-core-2.9.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
