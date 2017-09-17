@@ -2,8 +2,6 @@ package com;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import com.controllers.MainController;
-
 import java.util.HashSet;
 import java.util.Set;
 
