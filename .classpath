@@ -13,7 +13,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/AZ PC/eclipsejee/workspace/HotelBookersWeb/WebContent/WEB-INF/lib/jackson-core-2.9.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/HotelBookersEJB.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
