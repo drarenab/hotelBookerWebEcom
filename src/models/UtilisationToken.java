@@ -126,7 +126,7 @@ public class UtilisationToken {
 		this.nom = uti.getNom();
 		this.prenom = uti.getPrenom();
 		this.adresse = uti.getAdresse();
-		this.ville = uti.getAdresse();
+		this.ville = uti.getVille();
 		this.region = uti.getRegion();
 		this.codePostal = uti.getCodePostal();
 		this.sexe = uti.getsexe();
