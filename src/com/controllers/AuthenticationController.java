@@ -8,8 +8,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import com.ejbs.AuthenticationRemote;
 import com.entities.Utilisateur;
-import models.JsonResult;
-import models.UtilisationToken;
+import com.models.JsonResult;
+import com.models.UtilisationToken;
+
 import security.JwtSecurity;
 
 @Stateless

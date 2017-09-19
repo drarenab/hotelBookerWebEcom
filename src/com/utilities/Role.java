@@ -1,4 +1,4 @@
-package utils;
+package com.utilities;
 
 public interface Role {
 	String ADMIN = "ADMIN";
