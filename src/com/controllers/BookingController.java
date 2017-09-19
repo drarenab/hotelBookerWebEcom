@@ -15,11 +15,4 @@ public class BookingController {
 	@EJB(lookup ="ejb:/HotelBookersEJB//Booking!com.ejbs.BookingRemote")
     private BookingRemote bookingRemote;
 	
-	@GET
-    @Produces("application/json")
-    public java.util.List<Chambre> getAllRooms()
-    {
-		return bookingRemote.getALlRooms();
-    }
-	
 }

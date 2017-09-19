@@ -2,7 +2,6 @@ package models;
 
 import com.entities.Utilisateur;
 
-
 public class UtilisationToken {
 
 	private String nom;
@@ -130,7 +129,7 @@ public class UtilisationToken {
 		this.ville = uti.getAdresse();
 		this.region = uti.getRegion();
 		this.codePostal = uti.getCodePostal();
-		this.sexe = uti.getSex();
+		this.sexe = uti.getsexe();
 		this.numTel = uti.getNumTel();
 		this.email = uti.getEmail();
 		this.role = uti.getRole().getlibelle();
