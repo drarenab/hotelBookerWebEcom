@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import com.ejbs.BookingRemote;
+
 import com.ejbs.HotelsRemote;
 import com.entities.Chambre;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,6 +22,7 @@ import com.utilities.JpaPojoConverter;
 @Stateless
 @Path("/hotels")
 public class HotelsController {
+
 	@EJB(lookup ="ejb:/HotelBookersEJB//Hotels!com.ejbs.HotelsRemote")
     private HotelsRemote hotelsRemote;
 	
