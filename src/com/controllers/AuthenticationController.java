@@ -11,7 +11,7 @@ import com.entities.Utilisateur;
 import com.models.JsonResult;
 import com.models.UtilisationToken;
 
-import security.JwtSecurity;
+import com.security.JwtSecurity;
 
 @Stateless
 @Path("/auth")

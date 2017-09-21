@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.models.ChambreModel;
 import com.models.HotelModel;
+import com.models.JsonResult;
 import com.utilities.JpaPojoConverter;
 
 @Stateless
@@ -40,7 +41,8 @@ public class HotelsController {
 			chambreModel = JpaPojoConverter.chambreJpaToPojo(chambre);
 			chambreModelList.add(chambreModel);
 		}
-	
+//		JsonResult jsonResult = new JsonResult();
+//		jsonResult.setCode(code);
 		return chambreModelList;
     }
 	
