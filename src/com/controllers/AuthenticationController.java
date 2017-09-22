@@ -13,6 +13,7 @@ import com.models.UtilisationToken;
 
 import com.security.JwtSecurity;
 
+
 @Stateless
 @Path("/auth")
 public class AuthenticationController {
@@ -32,21 +33,7 @@ public class AuthenticationController {
 		}
 		return new JsonResult(401, "email deja utilise, veuillez vous authentifier !");
 	}
-	
-//	@Path("/loginGet/{username}/{password}")
-//	@GET
-//    @Produces("application/json") //for test only 
-//	public JsonResult loginGet(@PathParam("username") String username,@PathParam("password") String password ) {
-// 
-//		Utilisateur util=authenticationRemote.validUser(username,password);
-//		if(util!=null) {
-//			return new JsonResult(0, new UtilisationToken(util, secur.createToken("Authentication", util.getId().toString()))) ; 			
-//		}
-//		else {
-//			return new JsonResult(401, "user not register! please register");
-//		}
-//		
-//	}
+
 	
 	@Path("/login")
 	@POST
@@ -54,6 +41,7 @@ public class AuthenticationController {
 	public JsonResult login(@FormParam("email") String username,@FormParam("password") String password ) {
 		Utilisateur util=authenticationRemote.validUser(username,password);
 		if(util!=null) {
+
 			return new JsonResult(201, new UtilisationToken(util, secur.createToken("Authentication", util.getId().toString()))) ; 			
 		}
 		else {
