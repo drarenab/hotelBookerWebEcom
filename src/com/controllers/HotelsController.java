@@ -30,9 +30,18 @@ public class HotelsController {
 	@GET
 	@Path("/room/search")
 	@Produces("application/json")
-	public List<ChambreModel> getAllRooms()
+	public JsonResult getAllRooms()
     {
+		long errCode=201;
+		Object result;
+		JsonResult jsonResult;
 		List<Chambre> listChambres = hotelsRemote.getALlRooms();
+		if(listChambres.isEmpty()) {
+			errCode = 401;
+			result = new String("Aucune chambre n'as été trouvé");
+			jsonResult = new JsonResult(errCode,result);
+			return jsonResult;
+		}	
 		
 		List<ChambreModel> chambreModelList = new ArrayList();
 		ChambreModel chambreModel;
@@ -41,9 +50,10 @@ public class HotelsController {
 			chambreModel = JpaPojoConverter.chambreJpaToPojo(chambre);
 			chambreModelList.add(chambreModel);
 		}
-//		JsonResult jsonResult = new JsonResult();
-//		jsonResult.setCode(code);
-		return chambreModelList;
+		
+		jsonResult = new JsonResult(errCode,chambreModelList);
+		
+		return jsonResult;
     }
 	
 }

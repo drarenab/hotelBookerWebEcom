@@ -13,6 +13,5 @@ import com.entities.Chambre;
 @Path("/bookings")
 public class BookingController {
 	@EJB(lookup ="ejb:/HotelBookersEJB//Booking!com.ejbs.BookingRemote")
-    private BookingRemote bookingRemote;
-	
+    private BookingRemote bookingRemote;	
 }
