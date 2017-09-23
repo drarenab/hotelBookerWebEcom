@@ -26,8 +26,15 @@ public class AuthenticationController {
 	@POST
     @Produces("application/json")
 	public JsonResult register(@FormParam("nom")String nom,@FormParam("prenom")String prenom,@FormParam("adresse")String adresse,@FormParam("ville")String ville,@FormParam("region")String region,@FormParam("codePostal")String codePostal,@FormParam("sexe")String sexe,@FormParam("numTel")String numTel,@FormParam("email")String email,@FormParam("password")String pwd,@FormParam("role")String role ) {
-		
-		
+		if(nom==null || prenom==null ||prenom==null
+				  ||adresse==null||ville==null||region==null
+				  ||codePostal==null||sexe==null||email==null
+				  ||pwd==null||role==null||nom.isEmpty() || prenom.isEmpty() ||prenom.isEmpty()
+		  ||adresse.isEmpty()||ville.isEmpty()||region.isEmpty()
+		  ||codePostal.isEmpty()||sexe.isEmpty()||email.isEmpty()
+		  ||pwd.isEmpty()||role.isEmpty())	return new JsonResult(401, "Veuillez remplir correctement tous les champs");
+			
+
 		if(authenticationRemote.registerUser(nom,prenom,adresse,ville,region,codePostal,sexe,numTel,email,pwd,role)) {
 			return new JsonResult(201,"inscription reussi");
 		}
