@@ -14,6 +14,7 @@ import com.ejbs.BookingRemote;
 import com.ejbs.HotelsRemote;
 import com.entities.Chambre;
 import com.models.ChambreModel;
+import com.models.JsonResult;
 import com.utilities.JpaPojoConverter;
 
 @Stateless
@@ -27,9 +28,18 @@ public class HotelsController {
 	@GET
 	@Path("/room/search")
 	@Produces("application/json")
-	public List<ChambreModel> getAllRooms()
+	public JsonResult getAllRooms()
     {
+		long errCode=201;
+		Object result;
+		JsonResult jsonResult;
 		List<Chambre> listChambres = hotelsRemote.getALlRooms();
+		if(listChambres.isEmpty()) {
+			errCode = 401;
+			result = new String("Aucune chambre n'a ete trouver");
+			jsonResult = new JsonResult(errCode,result);
+			return jsonResult;
+		}	
 		
 		List<ChambreModel> chambreModelList = new ArrayList();
 		ChambreModel chambreModel;
@@ -38,21 +48,26 @@ public class HotelsController {
 			chambreModel = JpaPojoConverter.chambreJpaToPojo(chambre);
 			chambreModelList.add(chambreModel);
 		}
-//		JsonResult jsonResult = new JsonResult();
-//		jsonResult.setCode(code);
-		return chambreModelList;
+		
+		jsonResult = new JsonResult(errCode,chambreModelList);
+		
+		return jsonResult;
     }
 		
 	@GET
 	@Path("/room/search/{ville}/{dateDeb}/{dateFin}/{nbAdulte}/{nbEnfant}")
 	@Produces("application/json")
-	public List<ChambreModel> getRoomsWithFilter(@PathParam("ville")String ville,
+	public JsonResult getRoomsWithFilter(@PathParam("ville")String ville,
 			@PathParam("dateDeb") String dateDeb,
 			@PathParam("dateFin") String dateFin,
 			@PathParam("nbEnfant") int nbEnfant,
 			@PathParam("nbAdulte") int nbAdulte)
     {
+		long errCode=201;
+		Object result;
+		JsonResult jsonResult;
 		List<Chambre> listChambres = hotelsRemote.getRoomsForFilter(ville, dateDeb, dateFin, nbAdulte, nbEnfant);
+			
 		
 		List<ChambreModel> chambreModelList = new ArrayList();
 		ChambreModel chambreModel;
@@ -64,9 +79,16 @@ public class HotelsController {
 			}
 			
 		}
-//		JsonResult jsonResult = new JsonResult();
-//		jsonResult.setCode(code);
-		return chambreModelList;
+		if(chambreModelList.isEmpty()) {
+			errCode = 401;
+			result = new String("Aucune chambre n'a ete trouver");
+			jsonResult = new JsonResult(errCode,result);
+			return jsonResult;
+		}
+		jsonResult = new JsonResult(errCode,chambreModelList);
+		
+		return jsonResult;
+   
     }
 	
 	

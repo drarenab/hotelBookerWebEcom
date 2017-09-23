@@ -23,6 +23,7 @@ import com.utilities.EmailSender;
 @Path("/bookings")
 public class BookingController {
 	@EJB(lookup ="ejb:/HotelBookersEJB//Booking!com.ejbs.BookingRemote")
+
     private BookingRemote bookingRemote;
 	private JwtSecurity secur=new JwtSecurity();
 	@EJB(lookup ="ejb:/HotelBookersEJB//Authentication!com.ejbs.AuthenticationRemote")
