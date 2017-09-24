@@ -46,8 +46,8 @@ public class BookingController {
 		//faire la reservation
 		bookingRemote.addRowInReservation(dateDeb, dateFin, nbEnfant, nbAdulte, idChambre,idUser);
 		//envoi du mail
-		String [] from= {"abdelkarim.drareni@gmail.com"};
-//		String [] from= {u.getEmail()};
+//		String [] from= {"abdelkarim.drareni@gmail.com"};
+		String [] from= {u.getEmail()};
 
 		String [] cc= {"abdelkarim.drareni@gmail.com"};
 		String message = "<div style=\"color: #444444; font-family: Roboto Condensed,Helvetica,arial; font-size: 25px; font-weight: 600; line-height: 22px; padding: 0px; text-align: center;\">Cher client Pyramide,</div>\n" + 

@@ -5,9 +5,12 @@ import java.util.ArrayList;
 
 import com.entities.Chambre;
 import com.entities.Photos;
+import com.entities.Reservation;
 import com.models.ChambreModel;
 import com.models.HotelModel;
 import com.models.PhotosModel;
+import com.models.ReservationModel;
+import com.models.UtilisationToken;
 
 public class JpaPojoConverter {
 
@@ -57,4 +60,27 @@ public class JpaPojoConverter {
 		chambreModel.setHotel(hotelModel);
 		return chambreModel;
 	}
+	 //if user not connected, no token dispo, so put null (a tester si pas de souci)
+	 public static ReservationModel reservationJpaToPojo(Reservation reservation, String token) {
+		 	ReservationModel reservationModel;
+		 	ChambreModel chambre;
+			UtilisationToken utilisateurToken;
+			chambre=chambreJpaToPojo(reservation.getChambre());
+			
+			utilisateurToken=new UtilisationToken(reservation.getutilisateur(), token);
+			
+			reservationModel=new ReservationModel();
+			reservationModel.setId(reservation.getId());
+			reservationModel.setDateDeb(reservation.getDateDeb());
+			reservationModel.setDateFin(reservation.getDateFin());
+			reservationModel.setNbAdulte(reservation.getNbAdulte());
+			reservationModel.setNbEnfant(reservation.getNbEnfant());
+			reservationModel.setChambreModel(chambre);
+			reservationModel.setUtilisateur(utilisateurToken);
+			chambre=chambreJpaToPojo(reservation.getChambre());
+		
+			
+			
+			return reservationModel;
+		}
 }
