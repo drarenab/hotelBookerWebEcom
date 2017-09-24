@@ -16,7 +16,7 @@ import com.models.UtilisationToken;
 
 import com.security.JwtSecurity;
 import com.utilities.EmailSender;
-
+import org.mindrot.jbcrypt.BCrypt;
 
 @Stateless
 @Path("/auth")
@@ -54,7 +54,6 @@ public class AuthenticationController {
 			return new JsonResult(401, "Tous les champs doivent etre précisés");
 		Utilisateur util=authenticationRemote.validUser(username,password);
 		if(util!=null) {
-
 			return new JsonResult(201, new UtilisationToken(util, secur.createToken("Authentication", util.getId().toString()))) ; 			
 		}
 		else {
