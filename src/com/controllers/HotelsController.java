@@ -74,7 +74,7 @@ public class HotelsController {
 		ChambreModel chambreModel;
 		
 		for(Chambre chambre : listChambres ) {
-			if(bookingRemote.isRoomAvailableForPeriod(chambre.getId(),dateDeb,dateFin)==true) {
+			if(bookingRemote.isRoomAvailableForPeriod(chambre.getId(),dateDeb,dateFin)) {
 				chambreModel = JpaPojoConverter.chambreJpaToPojo(chambre);
 				chambreModelList.add(chambreModel);
 			}
