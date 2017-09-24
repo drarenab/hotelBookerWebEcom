@@ -46,6 +46,8 @@ public class AuthenticationController {
 	@POST
     @Produces("application/json")
 	public JsonResult login(@FormParam("email") String username,@FormParam("password") String password ) {
+		if(username==null ||password==null ||username.isEmpty()||password.isEmpty())
+			return new JsonResult(401, "Tous les champs doivent etre précisés");
 		Utilisateur util=authenticationRemote.validUser(username,password);
 		if(util!=null) {
 

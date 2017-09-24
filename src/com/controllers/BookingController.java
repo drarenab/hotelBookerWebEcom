@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.naming.NamingException;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -32,7 +33,11 @@ public class BookingController {
 	@Path("/bookRoom")
 	@POST
     @Produces("application/json")
-	public JsonResult bookRoom(@FormParam("token")String token,@FormParam("dateDeb") String dateDeb,@FormParam("dateFin") String dateFin,@FormParam("nbEnfant") int nbEnfant,@FormParam("nbAdulte") int nbAdulte,@FormParam("idChambre")long idChambre ) {
+	public JsonResult bookRoom(@FormParam("token")String token,@FormParam("dateDeb") String dateDeb,@FormParam("dateFin") String dateFin,@DefaultValue("-1") @FormParam("nbEnfant") int nbEnfant,@DefaultValue("-1") @FormParam("nbAdulte") int nbAdulte,@DefaultValue("-1") @FormParam("idChambre")long idChambre ) {
+		if(token==null||dateDeb==null || dateFin ==null ||nbEnfant==-1 || nbAdulte==-1|| idChambre==-1
+			||token.isEmpty()||dateDeb.isEmpty() || dateFin.isEmpty())
+				return new JsonResult(401, "Tous les champs doivent etre précisés");
+		
 		//valider le token
 		String idUser=secur.validateToken(token);
 		if (idUser.isEmpty()) return new JsonResult(401, "user not connected!");
