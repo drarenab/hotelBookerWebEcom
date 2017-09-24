@@ -25,6 +25,7 @@ public class HotelsController {
     private HotelsRemote hotelsRemote;
 	@EJB(lookup ="ejb:/HotelBookersEJB//Booking!com.ejbs.BookingRemote")
 	public BookingRemote bookingRemote;
+	
 	@GET
 	@Path("/room/search")
 	@Produces("application/json")
@@ -48,21 +49,21 @@ public class HotelsController {
 			chambreModel = JpaPojoConverter.chambreJpaToPojo(chambre);
 			chambreModelList.add(chambreModel);
 		}
-		
 		jsonResult = new JsonResult(errCode,chambreModelList);
-		
 		return jsonResult;
     }
 		
 	@GET
 	@Path("/room/search/{ville}/{dateDeb}/{dateFin}/{nbAdulte}/{nbEnfant}")
 	@Produces("application/json")
-	public JsonResult getRoomsWithFilter(@PathParam("ville")String ville,
+	public JsonResult getRoomsWithFilter(
+			@PathParam("ville") String ville,
 			@PathParam("dateDeb") String dateDeb,
 			@PathParam("dateFin") String dateFin,
 			@PathParam("nbEnfant") int nbEnfant,
-			@PathParam("nbAdulte") int nbAdulte)
-    {
+			@PathParam("nbAdulte") int nbAdulte
+			)
+	{
 		long errCode=201;
 		Object result;
 		JsonResult jsonResult;
@@ -86,10 +87,8 @@ public class HotelsController {
 			return jsonResult;
 		}
 		jsonResult = new JsonResult(errCode,chambreModelList);
-		
 		return jsonResult;
-   
     }
 	
-	
+
 }
