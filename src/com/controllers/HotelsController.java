@@ -17,6 +17,7 @@ import com.entities.Chambre;
 import com.models.ChambreModel;
 import com.models.JsonResult;
 import com.utilities.JpaPojoConverter;
+import com.utilities.Util;
 
 @Stateless
 @Path("/hotels")
@@ -68,6 +69,8 @@ public class HotelsController {
 		if(ville==null||dateDeb==null || dateFin ==null ||nbEnfant==-1 || nbAdulte==-1
 				||ville.isEmpty()||dateDeb.isEmpty() || dateFin.isEmpty())
 					return new JsonResult(401, "Tous les champs doivent etre précisés");
+		if(!Util.isDateDebGreaterThenDateFin(dateDeb, dateFin))
+			return new JsonResult(401, "La date de debut doit etre inferieur a la date de fin");
 		
 		long errCode=201;
 		Object result;

@@ -19,6 +19,7 @@ import com.entities.Utilisateur;
 import com.models.JsonResult;
 import com.security.JwtSecurity;
 import com.utilities.EmailSender;
+import com.utilities.Util;
 
 @Stateless
 @Path("/bookings")
@@ -34,9 +35,14 @@ public class BookingController {
 	@POST
     @Produces("application/json")
 	public JsonResult bookRoom(@FormParam("token")String token,@FormParam("dateDeb") String dateDeb,@FormParam("dateFin") String dateFin,@DefaultValue("-1") @FormParam("nbEnfant") int nbEnfant,@DefaultValue("-1") @FormParam("nbAdulte") int nbAdulte,@DefaultValue("-1") @FormParam("idChambre")long idChambre ) {
+		//verification des champs
 		if(token==null||dateDeb==null || dateFin ==null ||nbEnfant==-1 || nbAdulte==-1|| idChambre==-1
 			||token.isEmpty()||dateDeb.isEmpty() || dateFin.isEmpty())
 				return new JsonResult(401, "Tous les champs doivent etre précisés");
+		
+		//verification date debut <= date Fin
+		if(!Util.isDateDebGreaterThenDateFin(dateDeb, dateFin))
+			return new JsonResult(401, "La date de debut doit etre inferieur a la date de fin");
 		
 		//valider le token
 		String idUser=secur.validateToken(token);
