@@ -18,6 +18,7 @@ import com.entities.Chambre;
 import com.entities.Reservation;
 import com.models.ChambreModel;
 import com.models.JsonResult;
+import com.models.ModelObjectAndToken;
 import com.models.ReservationModel;
 import com.security.JwtSecurity;
 import com.utilities.JpaPojoConverter;
@@ -63,17 +64,24 @@ public class WishListController {
     		jsonResult=new JsonResult(401, "paramettre manquant");
 			return jsonResult;
     	}
-    
+    	
+    	ModelObjectAndToken modelObjectAndToken=new ModelObjectAndToken();
 		String idUser=secur.validateToken(token);
 		if (idUser.isEmpty()) {
-			jsonResult=new JsonResult(401, "user not connected!");
+			modelObjectAndToken.setValeur("user not connected!");
+			modelObjectAndToken.setToken("");
+			jsonResult=new JsonResult(401, modelObjectAndToken);
 			return jsonResult;
 		}
-		
+		//refresh and return new token
+				String newToken=secur.refreshToken(token);
+				
+				modelObjectAndToken.setToken(newToken);
 		
 		List<Reservation> list=wishListRemote.getWishListForClient(Long.parseLong(idUser));
 		if(list.isEmpty()) {
-			jsonResult=new JsonResult(401, "vous n'avez aucune reservation de faite");
+			modelObjectAndToken.setValeur("vous n'avez aucune reservation de faite");
+			jsonResult=new JsonResult(401, modelObjectAndToken);
 			return jsonResult;
 		}
 		ReservationModel reservationModel;
@@ -84,7 +92,8 @@ public class WishListController {
 			reservationModellList.add(reservationModel);
 		
 		}
-			jsonResult=new JsonResult(201,reservationModellList );
+		modelObjectAndToken.setValeur(reservationModellList);
+			jsonResult=new JsonResult(201,modelObjectAndToken );
 		
 		return jsonResult;
 		
