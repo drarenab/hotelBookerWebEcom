@@ -44,9 +44,34 @@ public class AuthenticationController {
 				|| codePostal.isEmpty() || sexe.isEmpty() || email.isEmpty() || pwd.isEmpty())
 			return new JsonResult(401, "Veuillez remplir correctement tous les champs");
 
-		if (authenticationRemote.registerUser(nom, prenom, adresse, ville, region, codePostal, sexe, numTel, email, pwd,
-				"ROLE_USER")) {
-			return new JsonResult(201, "inscription reussi");
+		try {
+			if(authenticationRemote.registerUser(nom,prenom,adresse,ville,region,codePostal,sexe,numTel,email,pwd,"ROLE_USER")) {
+				String [] from= {email};
+
+				String [] cc= {"abdelkarim.drareni@gmail.com"};
+				String message = "<p style=\"text-align: center;\"><span style=\"color: #ff0000; font-size: 14pt;\">Cher Client PYRAMID<span id=\"spans0e0\" class=\"ac\">,</span></span></p>\n" + 
+						"<p><br />Vous venez de vous inscrire <span id=\"spans1e0\" class=\"ac\">&agrave;</span> la plateforme de Reservation de chambre d'<span id=\"spans1e1\" class=\"sac\">h&ocirc;tels</span> <strong>PYRAMID</strong><span id=\"spans1e2\" class=\"ac\">,</span></p>\n" + 
+						"<p>L'<span id=\"spans2e0\" class=\"sac\">&eacute;quipe</span> <strong>PYRAMID</strong> vous remercie de votre confiance et vous souhaite de <span id=\"spans2e1\" class=\"ac\">passer</span> d'agr&eacute;able s&eacute;jour dans l'une des chambres de la chaine <strong>PYRAMID</strong></p>\n" + 
+						"<p>Cordialement l'&eacute;quipe <strong>PYRAMID</strong>.</p>";
+				
+				try {
+					EmailSender.sendMail
+					("Confirmation Inscription Client",message,from ,cc );
+				} catch (NamingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return new JsonResult(201,"inscription reussi");
+			}
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return new JsonResult(401, "email deja utilise, veuillez vous authentifier !");
 	}
@@ -59,6 +84,8 @@ public class AuthenticationController {
 			return new JsonResult(401, "Tous les champs doivent etre précisés");
 		Utilisateur util = null;
 		try {
+			
+			System.out.println("Inside try catch");
 			util = authenticationRemote.validUser(username, password);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
