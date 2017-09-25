@@ -68,6 +68,7 @@ public class EmailSender {
 			mimeMessage.setContent(multipart);
 			Transport transport = session.getTransport("smtp");
 			transport.connect(host, from, password);
+			
 			transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
 			transport.close();
 			System.out.println("Send Mail Ok !");

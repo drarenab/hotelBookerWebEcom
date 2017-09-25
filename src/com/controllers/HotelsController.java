@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -16,6 +17,7 @@ import com.entities.Chambre;
 import com.models.ChambreModel;
 import com.models.JsonResult;
 import com.utilities.JpaPojoConverter;
+import com.utilities.Util;
 
 @Stateless
 @Path("/hotels")
@@ -60,10 +62,17 @@ public class HotelsController {
 			@PathParam("ville") String ville,
 			@PathParam("dateDeb") String dateDeb,
 			@PathParam("dateFin") String dateFin,
-			@PathParam("nbEnfant") int nbEnfant,
-			@PathParam("nbAdulte") int nbAdulte
-			)
-	{
+
+			@DefaultValue("-1") @PathParam("nbEnfant") int nbEnfant,
+			@DefaultValue("-1") @PathParam("nbAdulte") int nbAdulte)
+    {
+		
+		if(ville==null||dateDeb==null || dateFin ==null ||nbEnfant==-1 || nbAdulte==-1
+				||ville.isEmpty()||dateDeb.isEmpty() || dateFin.isEmpty())
+					return new JsonResult(401, "Tous les champs doivent etre précisés");
+		if(!Util.isDateDebGreaterThenDateFin(dateDeb, dateFin))
+			return new JsonResult(401, "La date de debut doit etre inferieur a la date de fin");
+		
 		long errCode=201;
 		Object result;
 		JsonResult jsonResult;

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.naming.NamingException;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,6 +19,7 @@ import com.entities.Utilisateur;
 import com.models.JsonResult;
 import com.security.JwtSecurity;
 import com.utilities.EmailSender;
+import com.utilities.Util;
 
 @Stateless
 @Path("/bookings")
@@ -32,7 +34,16 @@ public class BookingController {
 	@Path("/bookRoom")
 	@POST
     @Produces("application/json")
-	public JsonResult bookRoom(@FormParam("token")String token,@FormParam("dateDeb") String dateDeb,@FormParam("dateFin") String dateFin,@FormParam("nbEnfant") int nbEnfant,@FormParam("nbAdulte") int nbAdulte,@FormParam("idChambre")long idChambre ) {
+	public JsonResult bookRoom(@FormParam("token")String token,@FormParam("dateDeb") String dateDeb,@FormParam("dateFin") String dateFin,@DefaultValue("-1") @FormParam("nbEnfant") int nbEnfant,@DefaultValue("-1") @FormParam("nbAdulte") int nbAdulte,@DefaultValue("-1") @FormParam("idChambre")long idChambre ) {
+		//verification des champs
+		if(token==null||dateDeb==null || dateFin ==null ||nbEnfant==-1 || nbAdulte==-1|| idChambre==-1
+			||token.isEmpty()||dateDeb.isEmpty() || dateFin.isEmpty())
+				return new JsonResult(401, "Tous les champs doivent etre précisés");
+		
+		//verification date debut <= date Fin
+		if(!Util.isDateDebGreaterThenDateFin(dateDeb, dateFin))
+			return new JsonResult(401, "La date de debut doit etre inferieur a la date de fin");
+		
 		//valider le token
 		String idUser=secur.validateToken(token);
 		if (idUser.isEmpty()) return new JsonResult(401, "user not connected!");
@@ -46,9 +57,8 @@ public class BookingController {
 		//faire la reservation
 		bookingRemote.addRowInReservation(dateDeb, dateFin, nbEnfant, nbAdulte, idChambre,idUser);
 		//envoi du mail
-//		String [] TO= {"abdelkarim.drareni@gmail.com"};
+		//String [] TO= {"abdelkarim.drareni@gmail.com"};
 		String [] TO= {u.getEmail()};
-
 		String [] cc= {"abdelkarim.drareni@gmail.com"};
 		String message = "<div style=\"color: #444444; font-family: Roboto Condensed,Helvetica,arial; font-size: 25px; font-weight: 600; line-height: 22px; padding: 0px; text-align: center;\">Cher client Pyramide,</div>\n" + 
 				"<p style=\"text-align: left;\"><span style=\"color: #000000;\">Nous sommes ravis que vous ayez choisi de s&eacute;journer dans un des <span id=\"spans0e0\" class=\"sac\">h&ocirc;tels</span> de notre chaine d'<span id=\"spans0e1\" class=\"sac\">h&ocirc;tellerie</span> PYRAMIDE.</span></p>\n" + 
