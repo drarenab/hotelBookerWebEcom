@@ -46,8 +46,8 @@ public class BookingController {
 		//faire la reservation
 		bookingRemote.addRowInReservation(dateDeb, dateFin, nbEnfant, nbAdulte, idChambre,idUser);
 		//envoi du mail
-		String [] from= {"abdelkarim.drareni@gmail.com"};
-//		String [] from= {u.getEmail()};
+//		String [] TO= {"abdelkarim.drareni@gmail.com"};
+		String [] TO= {u.getEmail()};
 
 		String [] cc= {"abdelkarim.drareni@gmail.com"};
 		String message = "<div style=\"color: #444444; font-family: Roboto Condensed,Helvetica,arial; font-size: 25px; font-weight: 600; line-height: 22px; padding: 0px; text-align: center;\">Cher client Pyramide,</div>\n" + 
@@ -59,7 +59,7 @@ public class BookingController {
 		
 		try {
 			EmailSender.sendMail
-			("Confirmation Reservation",message,from ,cc );
+			("Confirmation Reservation",message,TO ,cc );
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,5 +70,24 @@ public class BookingController {
 
 		return new JsonResult(201, "Reservation reussi");
 	}
+
+	@Path("/cancelRoom")
+	@POST
+    @Produces("application/json")
+	public JsonResult cancelBooking(@FormParam("token")String token,@FormParam("idBooking") Long idBooking) {
+		String idUser=secur.validateToken(token);
+		if (idUser.isEmpty()) return new JsonResult(401, "user not connected!");
+	
+		Long idUserLong = Long.parseLong(idUser);
+		
+		if(bookingRemote.doUserOwnBooking(idUserLong, idBooking)){
+			bookingRemote.cancelBooking(idBooking);
+		}
+		
+		return new JsonResult(201, "Annulation de la reservation reussite");
+	}
+	
+	
 	
 }
+
